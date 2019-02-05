@@ -42,7 +42,7 @@ end
 # neighbors and 8 - every cell around this cell is living)
 
 # refactor this
-def num_neighbors(x, y, arr)
+def get_num_neighbors(x, y, arr)
   neighbor_coords = get_neighbors_coords(x, y, arr)
   num_living_neighbors = 0
   neighbor_coords.each do |coord|
@@ -71,8 +71,19 @@ end
 # described in exercise1.md
 
 def iterate(arr)
-  # TODO 3
-  nil
+  new_arr = arr.map.with_index do |line, x|
+    line.map.with_index do |cell, y|
+      num_neighbors = get_num_neighbors(x, y, arr)
+      if (!cell and num_neighbors == 3)
+        'X'
+      elsif (cell and (num_neighbors == 2 or num_neighbors == 3))
+        'X'
+      else
+        '.'
+      end
+    end
+  end
+  new_arr
 end
 
 # Given a pseudorandom number generator, a size, and a percentage
@@ -118,6 +129,6 @@ elsif iters < 0
 prng = Random.new
 
 # Create the array and assign it a new array from the create_array method
-create_arr(prng, size, percent)
+# create_arr(prng, size, percent)
 
 # Iterate for _iters_ iterations
