@@ -26,11 +26,8 @@
 def print_arr(arr)
   arr.each do |line|
     line.each do |cell|
-      if cell
-        print 'x'
-      else
-        print '.'
-      end
+      print 'X' if cell
+      print '.' unless cell
     end
     puts
   end
@@ -41,46 +38,46 @@ end
 # in array arr (i.e., this will return a value between 0 - no living
 # neighbors and 8 - every cell around this cell is living)
 
-# refactor this
-def get_num_neighbors(x, y, arr)
-  neighbor_coords = get_neighbors_coords(x, y, arr)
+def get_num_neighbors(x_coord, y_coord, arr)
+  neighbor_coords = get_neighbors_coords(x_coord, y_coord, arr)
   num_living_neighbors = 0
   neighbor_coords.each do |coord|
     x, y = coord
-    if arr[x][y]
-      num_living_neighbors += 1
-    end
+    num_living_neighbors += 1 if arr[x][y]
   end
   num_living_neighbors
 end
 
-def get_neighbors_coords(x, y, arr)
+def get_neighbors_coords(x_coord, y_coord, arr)
   [
-    [(x + 1) % arr.length, y],
-    [(x + 1) % arr.length, (y + 1) % arr.length],
-    [(x + 1) % arr.length, (y - 1) % arr.length],
-    [(x - 1) % arr.length, y],
-    [(x - 1) % arr.length, (y + 1) % arr.length],
-    [(x - 1) % arr.length, (y - 1) % arr.length],
-    [x, (y + 1) % arr.length],
-    [x, (y - 1) % arr.length]
+    [(x_coord + 1) % arr.length, y_coord],
+    [(x_coord + 1) % arr.length, (y_coord + 1) % arr.length],
+    [(x_coord + 1) % arr.length, (y_coord - 1) % arr.length],
+    [(x_coord - 1) % arr.length, y_coord],
+    [(x_coord - 1) % arr.length, (y_coord + 1) % arr.length],
+    [(x_coord - 1) % arr.length, (y_coord - 1) % arr.length],
+    [x_coord, (y_coord + 1) % arr.length],
+    [x_coord, (y_coord - 1) % arr.length]
   ]
 end
 
 # Should perform one iteration of Conway's game of life, as
 # described in exercise1.md
+def generate_new_cell(x_coord, y_coord, arr, cell)
+  num_neighbors = get_num_neighbors(x_coord, y_coord, arr)
+  if !cell && num_neighbors == 3
+    true
+  elsif cell && [2, 3].include?(num_neighbors)
+    true
+  else
+    false
+  end
+end
 
 def iterate(arr)
   new_arr = arr.map.with_index do |line, x|
     line.map.with_index do |cell, y|
-      num_neighbors = get_num_neighbors(x, y, arr)
-      if (!cell and num_neighbors == 3)
-        'X'
-      elsif (cell and (num_neighbors == 2 or num_neighbors == 3))
-        'X'
-      else
-        '.'
-      end
+      generate_new_cell(x, y, arr, cell)
     end
   end
   new_arr
@@ -124,11 +121,17 @@ elsif percent < 0 || percent > 100
 elsif iters < 0
   puts 'number of iterations must be greater than or equal to 0!'
   exit
+end
 
 # Create a pseudo-random number generator to pass in to the create_array method
 prng = Random.new
 
 # Create the array and assign it a new array from the create_array method
-# create_arr(prng, size, percent)
+arr = create_arr(prng, size, percent)
 
 # Iterate for _iters_ iterations
+while iters >= 0
+  print_arr(arr)
+  arr = iterate(arr)
+  iters -= 1
+end

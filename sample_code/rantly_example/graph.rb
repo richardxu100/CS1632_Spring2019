@@ -26,7 +26,7 @@ class Graph
   def print
     if @nodes.keys.count.zero?
       puts "Empty graph!"
-    else  
+    else
       @nodes.each do |k, v|
         puts v
       end
