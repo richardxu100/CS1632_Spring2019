@@ -24,17 +24,47 @@
 # ***********
 
 def print_arr(arr)
-  # TODO 1
-  nil
+  arr.each do |line|
+    line.each do |cell|
+      if cell
+        print 'x'
+      else
+        print '.'
+      end
+    end
+    puts
+  end
+  puts '*' * arr.length
 end
 
 # Should return the # of living neighbors of cell in location x, y
 # in array arr (i.e., this will return a value between 0 - no living
 # neighbors and 8 - every cell around this cell is living)
 
+# refactor this
 def num_neighbors(x, y, arr)
-  # TODO 2
-  nil
+  neighbor_coords = get_neighbors_coords(x, y, arr)
+  num_living_neighbors = 0
+  neighbor_coords.each do |coord|
+    x, y = coord
+    if arr[x][y]
+      num_living_neighbors += 1
+    end
+  end
+  num_living_neighbors
+end
+
+def get_neighbors_coords(x, y, arr)
+  [
+    [(x + 1) % arr.length, y],
+    [(x + 1) % arr.length, (y + 1) % arr.length],
+    [(x + 1) % arr.length, (y - 1) % arr.length],
+    [(x - 1) % arr.length, y],
+    [(x - 1) % arr.length, (y + 1) % arr.length],
+    [(x - 1) % arr.length, (y - 1) % arr.length],
+    [x, (y + 1) % arr.length],
+    [x, (y - 1) % arr.length]
+  ]
 end
 
 # Should perform one iteration of Conway's game of life, as
@@ -66,7 +96,7 @@ end
 
 # TODO 4
 
-raise "Enter integers for size, percentage (1..100), and number of iterations at command line" unless ARGV.count == 3
+raise 'Enter integers for size, percentage (1..100), and number of iterations at command line' unless ARGV.count == 3
 size, percent, iters = ARGV[0].to_i, ARGV[1].to_i, ARGV[2].to_i
 
 
@@ -74,10 +104,20 @@ size, percent, iters = ARGV[0].to_i, ARGV[1].to_i, ARGV[2].to_i
 # If size is not >0, inform the user and exit
 # If percent is not an integer between 0 and 100, inform the user and exit
 # If number of iterations is not an integer that is 0 or greater, inform the user and exit
+if size <= 0
+  puts 'size must be greater than 0'
+  exit
+elsif percent < 0 || percent > 100
+  puts 'percent must be between 0 and 100'
+  exit
+elsif iters < 0
+  puts 'number of iterations must be greater than or equal to 0!'
+  exit
 
 # Create a pseudo-random number generator to pass in to the create_array method
 prng = Random.new
 
 # Create the array and assign it a new array from the create_array method
+create_arr(prng, size, percent)
 
 # Iterate for _iters_ iterations

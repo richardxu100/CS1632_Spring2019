@@ -1,0 +1,1 @@
+- each cell has 8 neighbors (includes diagonals)
