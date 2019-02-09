@@ -12,7 +12,7 @@ if valid_args
     res = ed.encrypt
     ed.print_result res
   elsif todo == 'd'
-    res = ed.decrypt 
+    res = ed.decrypt
     ed.print_result res
   else
     show_usage_and_exit

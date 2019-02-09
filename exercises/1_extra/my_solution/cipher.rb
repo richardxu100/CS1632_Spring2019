@@ -83,7 +83,7 @@ if operation == 'e'
   )
 elsif operation == 'd'
   write_to_file(
-    generate_decrypted_file(filepath, password), 
+    generate_decrypted_file(filepath, password),
     "#{filepath[0...-14]}_decrypted.txt"
   )
 end

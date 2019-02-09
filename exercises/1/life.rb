@@ -26,8 +26,7 @@
 def print_arr(arr)
   arr.each do |line|
     line.each do |cell|
-      print 'X' if cell
-      print '.' unless cell
+      cell ? (print 'X') : (print '.')
     end
     puts
   end
