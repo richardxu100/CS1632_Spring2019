@@ -13,16 +13,15 @@ end
 
 validate_input(ARGV)
 password, operation, filepath = ARGV
-security = Security.new(password)
 
 if operation == 'e'
   FileIOHelpers.write_to_file(
-    security.generate_encrypted_file(filepath),
+    Security.generate_encrypted_file(filepath, password),
     "#{filepath[0...-4]}_encrypted.txt"
   )
 elsif operation == 'd'
   FileIOHelpers.write_to_file(
-    security.generate_decrypted_file(filepath),
+    Security.generate_decrypted_file(filepath, password),
     "#{filepath[0...-14]}_decrypted.txt"
   )
 end

@@ -57,7 +57,7 @@ Rubocop should show no errors or warnings when run with the included .rubocop.ym
 
 Note that this only counts for SOURCE files, not test files.  You may ignore test files for Rubocop and simplecov purposes.  You can either individually specify the non-test Ruby files or run a command similar to the following in bash:
 
-```
+```bash
 ls -1 *.rb | grep -v _test | xargs rubocop
 ```
 
@@ -122,7 +122,7 @@ def test_invalid_val
 end
 ```
 
-Keep in mind some of the things we learned when doing manual testing; you should be cognizant of equivalence classes, boundary values, etc. and focus on them.
+::Keep in mind some of the things we learned when doing manual testing; you should be cognizant of equivalence classes, boundary values, etc. and focus on them.::
 
 The program should use appropriate object-oriented design.  Think of what objects could possibly exist to describe this world, and what methods they should have.  Do not attempt to do this with no classes or methods, etc.  It is, of course, possible, but will make testing more difficult!
 
@@ -163,7 +163,7 @@ require_relative 'baz_test'
 
 Running `all_tests.rb` will now give you coverage statistics for the entire project.
 
-Note - do not execute `SimpleCov.start` in each individual test file (e.g. foo_test, bar_test, etc.).  Just one time in `all_tests.rb`!
+::Note - do not execute `SimpleCov.start` in each individual test file (e.g. foo_test, bar_test, etc.).  Just one time in `all_tests.rb`!::
 
 If you are getting different results each time you run, make sure that you are not exit-ing in the middle of your production code. This will cause minitest to end its run. Since tests are run in pseudorandom order, your test suite will end as soon as exit is called, meaning you will get wildly varying results each time depending on when the test case which calls the exiting method is run.
 
@@ -176,7 +176,7 @@ The unit tests must be run by typing the following at the command line: `ruby al
 
 You may ignore the main `ruby_rush.rb` file IF AND ONLY IF it has 20 or fewer lines of code.  This will be very useful when developing your tests (and your program), so I recommend you think about how to minimize the number of lines (and maximize the usefulness of this "get out of jail free") in `ruby_rush.rb`.
 
-You will lose points if the program itself runs when I try to run the tests.  If you are having trouble with this, remember that any code that you require by a test file will be run.  Having a very small "main" file, which "require_relatives" many files that only have classes, will help you avoid this situation - you can then just test the individual class files and treat the `ruby_rush.rb` file as an untested `public static void main`.
+::You will lose points if the program itself runs when I try to run the tests.  If you are having trouble with this, remember that any code that you require by a test file will be run.  Having a very small "main" file, which "require_relatives" many files that only have classes, will help you avoid this situation - you can then just test the individual class files and treat the `ruby_rush.rb` file as an untested `public static void main`.::
 
 Unlike D1, you do NOT need to precisely line up requirements with test cases or develop a traceability matrix, but requirements are still useful for doing exploratory testing of your finished product.
 

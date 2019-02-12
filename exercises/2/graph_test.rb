@@ -9,15 +9,15 @@ require 'minitest/autorun'
 
 require_relative 'graph'
 
+# Tests for Graph class
 class GraphTest < Minitest::Test
-
   # Special method!
   # This will run the following code before each test
   # We will re-use the @g instance variable in each method
   # This was we don't have to type g = Graph::new in each test
 
   def setup
-    @g = Graph::new
+    @graph = Graph.new
   end
 
   # Remember tests must start with test_ !
@@ -27,8 +27,8 @@ class GraphTest < Minitest::Test
   # kind of Graph object.
 
   def test_new_graph_not_nil
-    refute_nil @g
-    assert_kind_of Graph, @g
+    refute_nil @graph
+    assert_kind_of Graph, @graph
   end
 
   # This is a "regular" add node test.
@@ -38,39 +38,34 @@ class GraphTest < Minitest::Test
   # even though we are testing
 
   def test_add_node
-    n = Node::new 1, [2,3]
+    node = Node.new(1, [2, 3])
 
-    @g.add_node n
+    @graph.add_node(node)
 
-    assert_equal @g.num_nodes, 1
-
+    assert_equal(@graph.num_nodes, 1)
   end
-
 
   # Create a node which is not part of the graph and refute (opposite
   # of assert) that it is in the graph.  That is, if we do not add
   # to the graph, it should not be in there
   def test_has_node_dummy_with_obj
     nonexistent_node = Node.new 1, [2]
-    refute @g.has_node? nonexistent_node
+    refute @graph.node?(nonexistent_node)
   end
-
 
   # Verify that adding one node makes our count one.
 
   def test_add_node_double
-    n = Node.new 1, [1]
-    @g.add_node n
+    node = Node.new 1, [1]
+    @graph.add_node(node)
     # Assert
-    assert_equal 1, @g.num_nodes
+    assert_equal(1, @graph.num_nodes)
   end
 
   # Verify that an empty node prints out "Empty graph!" when
   # print method is called.
 
   def test_print_empty
-    assert_output("Empty graph!\n") { @g.print }
+    assert_output("Empty graph!\n") { @graph.print }
   end
-
-
 end
