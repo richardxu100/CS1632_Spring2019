@@ -25,7 +25,9 @@ class Node
   def initialize(id, neighbors)
     @id = id
     @neighbors = []
-    neighbors.each { |n| @neighbors << n } if neighbors.count.nonzero?
+    neighbors.each do |neighbor|
+      @neighbors << neighbor if neighbors.count.nonzero?
+    end
   end
 
   def to_s
